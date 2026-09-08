@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Header } from './components/Header'
+import { MobileBottomNav } from './components/MobileBottomNav'
 import { SurveyForm } from './components/SurveyForm'
 import { SurveyHistory } from './components/SurveyHistory'
 import { SurveyStats } from './components/SurveyStats'
@@ -300,6 +301,13 @@ function App() {
         isOpen={!!printModalData}
         survey={printModalData}
         onClose={() => setPrintModalData(null)}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Docked to screen bottom on <= 860px) */}
+      <MobileBottomNav
+        currentTab={currentTab}
+        onTabChange={setCurrentTab}
+        historyCount={historySurveys.length}
       />
 
       {/* Toast notifications */}

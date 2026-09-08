@@ -125,7 +125,7 @@ export function SurveyForm({ isOnline, onSyncSuccess, onSurveySubmitted }) {
       loaiPhong: 'Phòng học lý thuyết',
       tenPhong: 'Phòng Học Lý Thuyết K-201',
       surveyorName: 'Nguyễn Hữu Việt',
-      surveyorId: '22IT088',
+      surveyorId: '23IT309',
       tinhTrang: 'tot',
       priority: 'normal',
       ghiChu: '',
@@ -375,7 +375,7 @@ export function SurveyForm({ isOnline, onSyncSuccess, onSurveySubmitted }) {
                     id="surveyorId"
                     type="text"
                     className="form-input form-input--clean"
-                    placeholder="VD: 22IT088 hoặc CB-VKU-12"
+                    placeholder="VD: 23IT309 hoặc CB-VKU-12"
                     {...register('surveyorId')}
                   />
                 </div>
