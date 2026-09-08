@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FieldSurvey" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="background-color" content="#f8fafc" />
+
+    <!-- SEO -->
+    <title>VKU Field Survey — Hệ Thống Khảo Sát Hiện Trường VKU</title>
+    <meta name="description" content="Hệ thống khảo sát hiện trường cơ sở vật chất VKU. Hỗ trợ offline hoàn toàn với Background Sync tự động khi có mạng." />
+    <meta name="keywords" content="VKU, khảo sát, hiện trường, cơ sở vật chất, PWA, offline" />
+    <meta name="author" content="Trường Đại học CNTT & Truyền thông Việt - Hàn (VKU)" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VKU Field Survey — Khảo Sát Hiện Trường" />
+    <meta property="og:description" content="Hệ thống khảo sát cơ sở vật chất VKU - Hỗ trợ offline và đồng bộ nền" />
+    <meta property="og:image" content="/favicon.svg" />
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Clear legacy service worker caches on reload
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(r) { r.unregister(); });
+        });
+      }
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ngoại Tuyến — VKU Field Survey</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        background: #0f172a;
+        color: #f1f5f9;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background-image: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+      }
+      .container {
+        text-align: center;
+        max-width: 420px;
+      }
+      .icon { font-size: 5rem; margin-bottom: 24px; animation: float 3s ease-in-out infinite; }
+      h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 12px;
+           background: linear-gradient(135deg, #6366f1, #a855f7);
+           -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 32px; }
+      .btn { display: inline-block; padding: 14px 28px;
+             background: linear-gradient(135deg, #6366f1, #a855f7);
+             color: white; text-decoration: none; border-radius: 9999px;
+             font-weight: 700; font-size: 0.95rem;
+             box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45);
+             transition: all 0.25s ease; cursor: pointer; border: none; }
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99, 102, 241, 0.65); }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon">📴</div>
+      <h1>Bạn đang ngoại tuyến</h1>
+      <p>
+        Không có kết nối mạng. Đừng lo — ứng dụng VKU Field Survey
+        hoạt động offline hoàn toàn. Dữ liệu của bạn sẽ được đồng bộ
+        tự động khi có mạng trở lại.
+      </p>
+      <button class="btn" onclick="window.location.reload()">
+        🔄 Thử lại kết nối
+      </button>
+    </div>
+  </body>
+</html>
