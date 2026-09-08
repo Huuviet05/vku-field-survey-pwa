@@ -435,7 +435,7 @@ body {
 /* ── MAIN CONTENT LAYOUT ── */
 .main-content-layout {
   flex: 1;
-  padding: 24px 20px 80px;
+  padding: 24px 20px 20px;
 }
 
 .content-container {
@@ -3178,13 +3178,13 @@ body {
     display: flex; /* Bottom dock active */
   }
 
-  /* Safe-area clearance for bottom dock */
+  /* Main layout tight padding to eliminate awkward gap above footer */
   .main-content-layout {
-    padding: 16px 14px calc(76px + env(safe-area-inset-bottom));
+    padding: 16px 14px 16px;
   }
 
   .app-footer {
-    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+    padding: 20px 16px calc(74px + env(safe-area-inset-bottom));
   }
 
   /* Hero Banner */
@@ -3237,10 +3237,10 @@ body {
     gap: 10px;
   }
 
-  /* Form Sticky Footer -> Static at end of form (Solves floating obstruction completely) */
+  /* Form Sticky Footer -> Static at end of form with natural margin */
   .form-sticky-footer {
     position: static !important;
-    margin-top: 20px;
+    margin: 0;
     flex-direction: column;
     align-items: stretch;
     padding: 16px;
@@ -3348,6 +3348,14 @@ body {
 
 /* 2. MOBILE PHONES (< 580px) */
 @media (max-width: 580px) {
+  .main-content-layout {
+    padding: 12px 10px 12px;
+  }
+
+  .app-footer {
+    padding: 16px 12px calc(72px + env(safe-area-inset-bottom));
+  }
+
   /* Compact App Header */
   .app-header__container {
     padding: 8px 12px;
