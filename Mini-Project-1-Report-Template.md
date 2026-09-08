@@ -13,10 +13,10 @@
 - **Student Information**:
   - 1. **Nguyễn Hữu Việt** — Student ID: **23IT309** — Role: Full-Stack PWA Architecture & Mobile Development — Contribution: 100%
 
-- 🔗 **Live Demo URL**: [https://vku-field-survey-pwa.vercel.app/](https://vku-field-survey-pwa.vercel.app/) *(Triển khai Vercel với giao thức HTTPS bảo mật chuẩn PWA)*
+- 🔗 **Live Demo URL**: [https://vku-field-survey-pwa-seven.vercel.app/](https://vku-field-survey-pwa-seven.vercel.app/) *(Triển khai Vercel với giao thức HTTPS bảo mật chuẩn PWA)*
 - 🐙 **GitHub Repository**: [https://github.com/Huuviet05/vku-field-survey-pwa](https://github.com/Huuviet05/vku-field-survey-pwa)
-- 📊 **Database / Webhook Endpoint**: [Google Sheets Database: https://docs.google.com/spreadsheets/d/1ry-4NJ-sXtrmQSzBmQkWriJqnWI_A1FnuIRDY96tp5A/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1ry-4NJ-sXtrmQSzBmQkWriJqnWI_A1FnuIRDY96tp5A/edit?usp=sharing)
-- 🎥 **Video Demo (Optional)**: [https://youtu.be/vku-field-survey-demo](https://youtu.be/vku-field-survey-demo)
+- 📊 **Cơ sở dữ liệu (Database)**: Sử dụng **IndexedDB Client-Side Database** (`vku-survey-db`, gồm 2 Object Stores: `surveys-history` & `pending-surveys`), tích hợp tính năng sao lưu JSON và xuất bảng tính CSV trực tiếp.
+- 🎥 **Video Demo (Optional)**: [https://youtu.be/xxxxx](https://youtu.be/xxxxx)
 
 ---
 
@@ -26,7 +26,7 @@
 |---|---|:---:|---|
 | **1** | **PWA Standalone & App Shell Caching** | **Complete** | • Web App Manifest chuẩn W3C (`display: "standalone"`, `theme_color: "#2563eb"`, `background_color: "#f8fafc"`, icon 192x192 và 512x512 maskable).<br>• Service Worker (`src/sw.js` kết hợp `Workbox-precaching`) tự động pre-cache toàn bộ App Shell (HTML, CSS, JS bundles, icons VKU) theo chiến lược **Cache-First**.<br>• Khởi động tức thì dưới 1 giây (**sub-second offline boot**) khi ngắt kết nối mạng hoàn toàn.<br>• Thiết kế Mobile-First 100% responsive, tối ưu hiển thị trên cả điện thoại (360px–580px), tablet và desktop với hệ màu nhận diện thương hiệu VKU. |
 | **2** | **Biểu mẫu Khảo sát Hiện trường & Modal Chọn Phòng Thông Minh** | **Complete** | • Form khảo sát toàn diện chuẩn kỹ thuật: Thông tin vị trí phòng học VKU (Tòa nhà K, V, A, B, C, L, KTX, Nhà đa năng; Tầng; Mã phòng).<br>• Tích hợp **Modal tra cứu và lọc nhanh 38+ phòng học/lab/hội trường** theo phân loại (Lý thuyết, Thực hành, Văn phòng, Tiện ích).<br>• Đánh giá hiện trạng 3 cấp độ (*Đạt chuẩn*, *Hư hỏng nhẹ*, *Cần thay thế gấp*) và thiết lập mức độ ưu tiên (*Bình thường*, *Cần lưu ý*, *Khẩn cấp*).<br>• Bảng kiểm định (Checklist) 6 hạng mục trang thiết bị: Hệ thống điện & Đèn, Máy chiếu & TV, Điều hòa & Quạt, Bàn ghế, Cửa & Cửa sổ, Mạng WiFi. |
-| **3** | **Offline Queue & Bộ Điều Phối Đồng Bộ Tự Động (Dual-Sync Engine)** | **Complete** | • **Khi Online**: Dữ liệu gửi trực tiếp lên máy chủ/Google Sheets Webhook tức thì (< 1s), lưu vào store `surveys-history` với trạng thái `synced`.<br>• **Khi Offline (Zero Connectivity)**: Phiếu được gắn mã biên bản chuẩn hóa (ví dụ: `VKU-20260908-xxxx`), lưu vĩnh viễn vào `surveys-history` với trạng thái `pending`, đồng thời xếp vào hàng đợi `pending-surveys` trong **IndexedDB**.<br>• Tự động đăng ký **Background Sync API** (`sync-surveys`). Khi có mạng trở lại, Service Worker tự động thức giấc ở luồng nền, gửi tuần tự các phiếu tồn đọng lên máy chủ, xóa khỏi hàng đợi, cập nhật trạng thái `synced` và gửi `postMessage` báo UI hiển thị Toast chúc mừng. |
+| **3** | **Offline Queue & Bộ Điều Phối Đồng Bộ Tự Động (Dual-Sync Engine)** | **Complete** | • **Khi Online**: Dữ liệu gửi trực tiếp lên Endpoint máy chủ tức thì (< 1s), lưu vào store `surveys-history` với trạng thái `synced`.<br>• **Khi Offline (Zero Connectivity)**: Phiếu được gắn mã biên bản chuẩn hóa (ví dụ: `VKU-20260908-xxxx`), lưu vĩnh viễn vào `surveys-history` với trạng thái `pending`, đồng thời xếp vào hàng đợi `pending-surveys` trong **IndexedDB**.<br>• Tự động đăng ký **Background Sync API** (`sync-surveys`). Khi có mạng trở lại, Service Worker tự động thức giấc ở luồng nền, gửi tuần tự các phiếu tồn đọng lên máy chủ, xóa khỏi hàng đợi, cập nhật trạng thái `synced` và gửi `postMessage` báo UI hiển thị Toast chúc mừng. |
 | **4** | **Chụp Ảnh Hiện Trường & Tối Ưu Nén Ảnh Client-side** | **Complete** | • Tích hợp chụp ảnh hiện trường trực tiếp từ Camera sau của điện thoại (`capture="environment"`) hoặc tải ảnh từ thư viện máy.<br>• **Nén ảnh tự động bằng HTML5 Canvas API** (`src/utils/imageCompressor.js`) trước khi lưu trữ: giảm kích thước và dung lượng từ 3MB–5MB xuống chỉ còn ~100KB–200KB mà vẫn giữ độ nét chi tiết hỏng hóc.<br>• Chuyển đổi ảnh sang chuỗi Base64 DataURL để lưu an toàn vào IndexedDB mà không bị giới hạn bộ nhớ 5MB như `localStorage`.<br>• Hỗ trợ thêm chú thích cho từng bức ảnh, xem trước (preview) và xóa ảnh dễ dàng. |
 | **5** | **Quản Lý Lịch Sử, Thống Kê KPI & Xuất Báo Cáo / In Biên Bản A4** | **Complete** | • **Quản lý lịch sử (History Manager)**: Xem danh sách phiếu đã khảo sát, bộ lọc theo Tòa nhà và trạng thái đồng bộ (Tất cả, Đã đồng bộ, Chờ đồng bộ).<br>• **Modal Chi tiết**: Xem lại đầy đủ checklist, hiện trạng và phóng to ảnh minh chứng.<br>• **Thống kê & KPI (Survey Stats)**: Biểu đồ trực quan tỷ lệ đạt chuẩn, danh sách cảnh báo các phòng hư hỏng khẩn cấp, tiến độ kiểm kê từng khối nhà.<br>• **Xuất dữ liệu & In ấn chuyên nghiệp**: Hỗ trợ xuất dữ liệu bảng tính định dạng CSV, sao lưu JSON và in biên bản khảo sát hiện trường chuẩn hành chính A4 (Print to PDF). |
 
@@ -152,7 +152,7 @@ VKUFieldSurveyPWA/
 ### 📸 Bằng chứng 4: Tự động Đồng bộ Dữ liệu lên Máy Chủ khi Có Mạng Trở Lại
 - **Mô tả**: Khi thiết bị kết nối mạng trở lại (`Network: Online`), Service Worker tự động kích hoạt sự kiện `sync` với tag `sync-surveys`. Hệ thống tuần tự đẩy dữ liệu lên máy chủ, xóa dữ liệu khỏi `pending-surveys`, chuyển trạng thái phiếu sang `synced` (màu xanh lá) và thông báo Toast chúc mừng xuất hiện trên màn hình.
 - **Hình ảnh minh chứng**:  
-  *(Chèn ảnh chụp màn hình thông báo đồng bộ thành công và dữ liệu trên Server/Sheets tại đây)*
+  *(Chèn ảnh chụp màn hình thông báo đồng bộ thành công Toast và danh sách phiếu đã chuyển sang trạng thái Đã đồng bộ - Synced màu xanh lá trong ứng dụng tại đây)*
 
 ---
 
