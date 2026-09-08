@@ -224,8 +224,30 @@ function App() {
       <footer className="app-footer" role="contentinfo">
         <div className="footer-content">
           <div className="footer-brand">
-            <div className="footer-logo-badge">
-              <span className="footer-vku-text">VKU</span>
+            <div className="footer-logo-badge" aria-label="Logo VKU">
+              <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="12" fill="url(#vkuFooterGrad)" />
+                <defs>
+                  <linearGradient id="vkuFooterGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#1e40af" />
+                    <stop offset="1" stopColor="#2563eb" />
+                  </linearGradient>
+                </defs>
+                <text
+                  x="50%"
+                  y="48%"
+                  dominantBaseline="central"
+                  textAnchor="middle"
+                  fontFamily="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+                  fontWeight="900"
+                  fontSize="16"
+                  fill="#ffffff"
+                  letterSpacing="-0.5"
+                >
+                  VKU
+                </text>
+                <rect x="13" y="32" width="22" height="3" rx="1.5" fill="#f97316" />
+              </svg>
             </div>
             <div>
               <strong>VKU Field Survey</strong>
