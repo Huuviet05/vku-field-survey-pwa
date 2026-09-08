@@ -823,23 +823,43 @@ body {
 }
 
 .btn-change-room {
-  padding: 8px 14px;
-  background: white;
-  border: 1.5px solid var(--border-medium);
-  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1.5px solid var(--color-primary-200, #bfdbfe);
+  border-radius: var(--radius-full, 9999px);
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-primary, #2563eb);
   cursor: pointer;
   white-space: nowrap;
   transition: all var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
+}
+
+.btn-change-room svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.25s ease;
 }
 
 .btn-change-room:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-primary-50);
+  background: var(--color-primary-50, #eff6ff);
+  color: var(--color-primary-dark, #1d4ed8);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.16);
+}
+
+.btn-change-room:hover svg {
+  transform: rotate(90deg);
+}
+
+.btn-change-room:active {
+  transform: scale(0.97);
 }
 
 /* ── RADIO CARDS MODERN (TÌNH TRẠNG) ── */
@@ -3440,7 +3460,8 @@ body {
   }
 
   .btn-choose-room,
-  .btn-reselect-room {
+  .btn-reselect-room,
+  .btn-change-room {
     width: 100%;
     justify-content: center;
   }
