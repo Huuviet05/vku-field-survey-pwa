@@ -16,8 +16,8 @@
 - 🔗 **Live Demo URL (PWA)**: [https://vku-field-survey-pwa-seven.vercel.app/](https://vku-field-survey-pwa-seven.vercel.app/) *(Triển khai Vercel với giao thức HTTPS bảo mật chuẩn PWA)*
 - 🐙 **GitHub Repository**: [https://github.com/Huuviet05/vku-field-survey-pwa](https://github.com/Huuviet05/vku-field-survey-pwa)
 - 📊 **Cơ sở dữ liệu (Cloud & Local Database)**: 
-  - **Cloud Database (Google Sheets)**: Dữ liệu khảo sát được đồng bộ tự động thời gian thực lên bảng tính Google Sheets qua **Google Apps Script Webhook REST API**.
-  - **Cloud Image Storage**: Tích hợp **ImgBB API** tự động tải ảnh hiện trường lên Cloud và tạo công thức `=HYPERLINK()` trực tiếp mở ảnh trong Google Sheets.
+  - **Cloud Database (Google Sheets)**: https://docs.google.com/spreadsheets/d/1k-qoMJyvHYmliH1VYs8f_2bFhtUl4Wa8Y70R0QidCsU/edit?gid=0#gid=0.
+  - **Cloud Image Storage**: https://hu-viet.imgbb.com/. 
   - **Local Database (IndexedDB)**: Cơ sở dữ liệu nội bộ trên thiết bị (`vku-survey-db` gồm 2 Object Stores: `surveys-history` & `pending-surveys`), hỗ trợ lưu trữ ngoại tuyến tuyệt đối (Zero Connectivity), sao lưu JSON và xuất bảng tính CSV chuẩn UTF-8.
 - 📱 **Android Native App**: Đóng gói thành công ứng dụng **Android Native APK** thông qua **Capacitor 8** (`com.vku.fieldsurvey`), sẵn sàng cài đặt trực tiếp trên các thiết bị Android từ Android 7.0 đến Android 15 (API 24 - 35).
 - 🎥 **Video Demo (Optional)**: [https://youtu.be/xxxxx](https://youtu.be/xxxxx)
