@@ -196,6 +196,7 @@ export async function manualSync(onSuccess) {
 
   let syncedCount = 0
   let failedCount = 0
+  let lastErrorMsg = ''
 
   for (const item of pendingSurveys) {
     try {
@@ -213,14 +214,15 @@ export async function manualSync(onSuccess) {
       console.log('[IndexedDB] ✅ Synced:', item.refCode || item.id)
     } catch (err) {
       failedCount++
+      lastErrorMsg = err.message || 'Lỗi không xác định'
       console.error('[IndexedDB] ❌ Sync thất bại cho phiếu', item.refCode || item.id, ':', err.message)
       // Giữ nguyên trong pending queue để retry sau
     }
   }
 
   console.log(`[IndexedDB] 🏁 Sync xong: ${syncedCount} thành công, ${failedCount} thất bại`)
-  if (onSuccess) onSuccess(syncedCount, failedCount)
-  return { synced: syncedCount, failed: failedCount }
+  if (onSuccess) onSuccess(syncedCount, failedCount, lastErrorMsg)
+  return { synced: syncedCount, failed: failedCount, error: lastErrorMsg }
 }
 
 /**

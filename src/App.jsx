@@ -86,12 +86,12 @@ function App() {
       showToast(`Đang tự động đồng bộ ${count} phiếu khảo sát...`, 'info')
       setIsSyncing(true)
       try {
-        await manualSync(async (syncedCount, failedCount) => {
+        await manualSync(async (syncedCount, failedCount, lastError) => {
           if (failedCount === 0) {
             showToast(`Đồng bộ thành công ${syncedCount} phiếu khảo sát! 🎉`, 'sync')
           } else {
             showToast(
-              `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại (sẽ thử lại sau)`,
+              `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại${lastError ? ` (${lastError})` : ''}`,
               failedCount > 0 ? 'warning' : 'sync'
             )
           }
@@ -112,12 +112,12 @@ function App() {
     showToast('Đang tiến hành đồng bộ dữ liệu lên máy chủ...', 'info')
 
     try {
-      await manualSync(async (syncedCount, failedCount) => {
+      await manualSync(async (syncedCount, failedCount, lastError) => {
         if (failedCount === 0) {
           showToast(`Đã đồng bộ thành công ${syncedCount} phiếu khảo sát!`, 'sync')
         } else {
           showToast(
-            `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại`,
+            `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại${lastError ? ` (${lastError})` : ''}`,
             'warning'
           )
         }
