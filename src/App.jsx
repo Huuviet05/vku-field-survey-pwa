@@ -15,7 +15,6 @@ import {
   getAllSurveyHistory,
   deleteSurveyFromHistory,
   manualSync,
-  seedSampleSurveysIfEmpty,
 } from './db/indexedDB'
 
 // ============================================================
@@ -50,13 +49,9 @@ function App() {
     }
   }, [])
 
-  // Khởi tạo app: Nạp mẫu nếu trống và tải dữ liệu
+  // Khởi tạo app: Tải dữ liệu từ IndexedDB
   useEffect(() => {
-    const initApp = async () => {
-      await seedSampleSurveysIfEmpty()
-      await reloadData()
-    }
-    initApp()
+    reloadData()
   }, [reloadData])
 
   // Lắng nghe message từ Service Worker (Background Sync thành công)
