@@ -33,6 +33,8 @@ function devSwCleaner() {
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    host: true, // Expose ra network (0.0.0.0) để truy cập từ thiết bị di động
+    port: 5173,
     headers: {
       'Cache-Control': 'no-store, no-cache, must-revalidate',
     },

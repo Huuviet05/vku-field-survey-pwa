@@ -5,7 +5,10 @@ const config: CapacitorConfig = {
   appName: 'VKU Field Survey',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    // 🔴 CHỈ DÙNG KHI PHÁT TRIỂN — Xóa `url` trước khi build production!
+    url: 'http://172.26.49.247:5173',
+    cleartext: true,
+    androidScheme: 'http'
   }
 };
 

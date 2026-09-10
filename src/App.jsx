@@ -86,8 +86,15 @@ function App() {
       showToast(`Đang tự động đồng bộ ${count} phiếu khảo sát...`, 'info')
       setIsSyncing(true)
       try {
-        await manualSync(async (syncedCount) => {
-          showToast(`Đồng bộ thành công ${syncedCount} phiếu khảo sát!`, 'sync')
+        await manualSync(async (syncedCount, failedCount) => {
+          if (failedCount === 0) {
+            showToast(`Đồng bộ thành công ${syncedCount} phiếu khảo sát! 🎉`, 'sync')
+          } else {
+            showToast(
+              `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại (sẽ thử lại sau)`,
+              failedCount > 0 ? 'warning' : 'sync'
+            )
+          }
           await reloadData()
         })
       } finally {
@@ -105,8 +112,15 @@ function App() {
     showToast('Đang tiến hành đồng bộ dữ liệu lên máy chủ...', 'info')
 
     try {
-      await manualSync(async (syncedCount) => {
-        showToast(`Đã đồng bộ thành công ${syncedCount} phiếu khảo sát!`, 'sync')
+      await manualSync(async (syncedCount, failedCount) => {
+        if (failedCount === 0) {
+          showToast(`Đã đồng bộ thành công ${syncedCount} phiếu khảo sát!`, 'sync')
+        } else {
+          showToast(
+            `Đồng bộ: ${syncedCount} thành công, ${failedCount} thất bại`,
+            'warning'
+          )
+        }
         await reloadData()
       })
     } catch (err) {

@@ -1,4 +1,5 @@
 import { openDB } from 'idb'
+import { syncSurveyToSheets } from '../utils/sheetsSync'
 
 // ============================================================
 // IndexedDB Layer - VKU Field Survey PWA v2
@@ -182,31 +183,44 @@ export async function markHistoryAsSynced(historyId) {
  * Đồng bộ thủ công toàn bộ phiếu pending
  * @param {Function} onSuccess
  */
+/**
+ * Đồng bộ toàn bộ phiếu pending lên Google Sheets
+ * @param {Function} onSuccess - callback(syncedCount, failedCount)
+ * @returns {Promise<{synced: number, failed: number}>}
+ */
 export async function manualSync(onSuccess) {
   const pendingSurveys = await getAllPendingSurveys()
-  if (pendingSurveys.length === 0) return
+  if (pendingSurveys.length === 0) return { synced: 0, failed: 0 }
 
-  console.log('[IndexedDB] 🔄 Starting manual sync for', pendingSurveys.length, 'records')
+  console.log('[IndexedDB] 🔄 Starting sync for', pendingSurveys.length, 'records')
+
+  let syncedCount = 0
+  let failedCount = 0
 
   for (const item of pendingSurveys) {
     try {
-      // Giả lập API truyền tải dữ liệu
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Gửi lên Google Sheets qua Apps Script
+      await syncSurveyToSheets(item)
 
-      // Cập nhật trạng thái trong history
+      // Cập nhật trạng thái trong history thành 'synced'
       if (item.historyId) {
         await markHistoryAsSynced(item.historyId)
       }
 
       // Xóa khỏi pending queue
       await deletePendingSurvey(item.id)
-      console.log('[IndexedDB] ✅ Synced pending survey:', item.id)
+      syncedCount++
+      console.log('[IndexedDB] ✅ Synced:', item.refCode || item.id)
     } catch (err) {
-      console.error('[IndexedDB] ❌ Sync error for item:', item.id, err)
+      failedCount++
+      console.error('[IndexedDB] ❌ Sync thất bại cho phiếu', item.refCode || item.id, ':', err.message)
+      // Giữ nguyên trong pending queue để retry sau
     }
   }
 
-  if (onSuccess) onSuccess(pendingSurveys.length)
+  console.log(`[IndexedDB] 🏁 Sync xong: ${syncedCount} thành công, ${failedCount} thất bại`)
+  if (onSuccess) onSuccess(syncedCount, failedCount)
+  return { synced: syncedCount, failed: failedCount }
 }
 
 /**

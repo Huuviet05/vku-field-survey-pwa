@@ -77,6 +77,14 @@ export function SurveyHistory({
       can_thay_the: 'Cần thay thế',
     }
 
+    const formatCSVDate = (ts) => {
+      if (!ts) return ''
+      const d = new Date(ts)
+      if (isNaN(d.getTime())) return ''
+      const pad = (n) => String(n).padStart(2, '0')
+      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+    }
+
     const rows = surveys.map((s) => [
       `"${s.refCode || ''}"`,
       `"${s.maPhong || ''}"`,
@@ -87,7 +95,7 @@ export function SurveyHistory({
       `"${s.priority || 'normal'}"`,
       `"${s.surveyorName || ''}"`,
       `"${s.surveyorId || ''}"`,
-      `"${new Date(s.timestamp).toLocaleString('vi-VN')}"`,
+      `"${formatCSVDate(s.timestamp)}"`,
       `"${s.status === 'synced' ? 'Đã gửi máy chủ' : 'Chờ đồng bộ'}"`,
       s.photos?.length || 0,
       `"${(s.ghiChu || '').replace(/"/g, '""')}"`,
