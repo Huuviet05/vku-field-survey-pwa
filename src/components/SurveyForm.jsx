@@ -175,20 +175,16 @@ export function SurveyForm({ isOnline, onSyncSuccess, onSurveySubmitted }) {
     }
 
     try {
-      if (isOnline) {
-        await new Promise((r) => setTimeout(r, 1000))
-      }
-
-      const { historyId, refCode } = await saveSurvey(surveyPayload, isOnline)
+      const { historyId, refCode, isSynced } = await saveSurvey(surveyPayload, isOnline)
       const fullRecord = {
         ...surveyPayload,
         id: historyId,
         refCode,
-        status: isOnline ? 'synced' : 'pending',
+        status: isSynced ? 'synced' : 'pending',
         timestamp: new Date().toISOString(),
       }
 
-      if (!isOnline) {
+      if (!isSynced) {
         if ('serviceWorker' in navigator && 'SyncManager' in window) {
           try {
             const sw = await navigator.serviceWorker.ready

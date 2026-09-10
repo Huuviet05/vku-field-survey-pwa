@@ -75,20 +75,37 @@ export async function saveSurvey(surveyData, isOnline) {
   const refCode = surveyData.refCode || generateSurveyCode()
   const now = new Date().toISOString()
 
+  let isSynced = false
+  let syncedAt = null
+
+  // Nếu đang online, gửi thẳng lên Google Sheets ngay lập tức
+  if (isOnline) {
+    try {
+      console.log('[IndexedDB] 🌐 Online - đang gửi trực tiếp lên Google Sheets cho phiếu:', refCode)
+      await syncSurveyToSheets({ ...surveyData, refCode, timestamp: now })
+      isSynced = true
+      syncedAt = now
+      console.log('[IndexedDB] ✅ Đã gửi trực tiếp thành công lên Google Sheets:', refCode)
+    } catch (syncErr) {
+      console.warn('[IndexedDB] ⚠️ Gửi trực tiếp thất bại, lưu vào hàng đợi chờ sync lại:', syncErr.message)
+      isSynced = false
+    }
+  }
+
   const historyRecord = {
     ...surveyData,
     refCode,
     timestamp: now,
-    status: isOnline ? 'synced' : 'pending',
-    syncedAt: isOnline ? now : null,
+    status: isSynced ? 'synced' : 'pending',
+    syncedAt,
   }
 
   // 1. Lưu vào history
   const historyId = await db.add(STORE_HISTORY, historyRecord)
   console.log('[IndexedDB] 📥 Survey saved to history, id:', historyId, 'refCode:', refCode)
 
-  // 2. Nếu offline, đưa vào hàng đợi pending-surveys
-  if (!isOnline) {
+  // 2. Nếu chưa sync thành công (offline hoặc lỗi mạng), đưa vào pending queue
+  if (!isSynced) {
     const pendingRecord = {
       ...historyRecord,
       historyId,
@@ -97,7 +114,7 @@ export async function saveSurvey(surveyData, isOnline) {
     console.log('[IndexedDB] ⏳ Survey queued for offline sync, pendingId:', pendingId)
   }
 
-  return { historyId, refCode }
+  return { historyId, refCode, isSynced }
 }
 
 /**

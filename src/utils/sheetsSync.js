@@ -90,15 +90,32 @@ async function uploadAllPhotos(photos = []) {
 }
 
 // -----------------------------------------------------------
+// Định dạng link ảnh hiển thị trong Google Sheets
+// -----------------------------------------------------------
+function formatPhotoCell(photoUrls = []) {
+  if (!photoUrls || photoUrls.length === 0) return ''
+  if (photoUrls.length === 1) {
+    const p = photoUrls[0]
+    const cleanUrl = (p.url || '').replace(/"/g, '')
+    const cleanCaption = (p.caption || '').replace(/"/g, "'").trim()
+    const label = cleanCaption ? `🔗 Xem ảnh (${cleanCaption})` : '🔗 Xem ảnh'
+    return `=HYPERLINK("${cleanUrl}", "${label}")`
+  }
+  return photoUrls
+    .map((p, i) => {
+      const cleanUrl = (p.url || '').replace(/"/g, '')
+      const cleanCaption = (p.caption || '').replace(/"/g, "'").trim()
+      return cleanCaption ? `${cleanUrl} (${cleanCaption})` : cleanUrl
+    })
+    .join('\n')
+}
+
+// -----------------------------------------------------------
 // Chuyển object survey phức tạp → row phẳng gửi lên Sheets
 // -----------------------------------------------------------
 function flattenSurvey(survey, photoUrls = []) {
   const checklist = survey.checklist || {}
-
-  const photoUrlsText =
-    photoUrls.length > 0
-      ? photoUrls.map((p) => (p.caption ? `${p.url} (${p.caption})` : p.url)).join('\n')
-      : ''
+  const photoUrlsText = formatPhotoCell(photoUrls)
 
   return {
     refCode: survey.refCode || '',
@@ -160,8 +177,8 @@ export async function syncSurveyToSheets(survey) {
   const response = await fetch(scriptUrl, {
     method: 'POST',
     // Apps Script không hỗ trợ Content-Type: application/json với CORS
-    // Dùng text/plain và parse ở phía Apps Script
-    headers: { 'Content-Type': 'text/plain' },
+    // Dùng text/plain;charset=utf-8 và parse ở phía Apps Script
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(rowData),
   })
 
