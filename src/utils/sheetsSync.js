@@ -132,7 +132,14 @@ function flattenSurvey(survey, photoUrls = []) {
 // Trả về true nếu thành công, throw Error nếu thất bại
 // -----------------------------------------------------------
 export async function syncSurveyToSheets(survey) {
-  if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+  let scriptUrl = (GOOGLE_SCRIPT_URL || '').trim()
+  if (scriptUrl.startsWith('ttps://')) {
+    scriptUrl = 'h' + scriptUrl
+  } else if (scriptUrl && !scriptUrl.startsWith('http://') && !scriptUrl.startsWith('https://')) {
+    scriptUrl = 'https://' + scriptUrl
+  }
+
+  if (!scriptUrl || scriptUrl.includes('YOUR_SCRIPT_ID')) {
     throw new Error('VITE_GOOGLE_SCRIPT_URL chưa được cài đặt trong file .env')
   }
 
@@ -150,7 +157,7 @@ export async function syncSurveyToSheets(survey) {
   // 3. POST lên Google Apps Script
   console.log('[sheetsSync] 📤 Đang gửi dữ liệu lên Google Sheets...', rowData.refCode)
 
-  const response = await fetch(GOOGLE_SCRIPT_URL, {
+  const response = await fetch(scriptUrl, {
     method: 'POST',
     // Apps Script không hỗ trợ Content-Type: application/json với CORS
     // Dùng text/plain và parse ở phía Apps Script
